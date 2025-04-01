@@ -13,7 +13,7 @@ export default function Index() {
     useEffect(() => {
         GoogleSignin.configure({
             webClientId:
-                "449847341434-d1o044v27ns9ub9oogkh9u21cao9v14d.apps.googleusercontent.com",
+                "754183958941-tjj80vho6q6misdv4mpmmu99mg4a8ji2.apps.googleusercontent.com",
             scopes: ["profile", "email"],
         });
     }, []);
