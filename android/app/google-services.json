@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "754183958941",
+    "project_id": "bitscarpool-a66f8",
+    "storage_bucket": "bitscarpool-a66f8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754183958941:android:414e2ec50698328d953f74",
+        "android_client_info": {
+          "package_name": "com.kirmada150905.bitscarpool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754183958941-vn3g4eff5i5chh5vtavkn1dqdv8fiqd0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kirmada150905.bitscarpool",
+            "certificate_hash": "2ffb0e8036895022d973a8e7b6093912f937a78c"
+          }
+        },
+        {
+          "client_id": "754183958941-tjj80vho6q6misdv4mpmmu99mg4a8ji2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNAtaJrh2iZoR7K1r9D_9EJEfleChpBSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "754183958941-tjj80vho6q6misdv4mpmmu99mg4a8ji2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "754183958941-d6tra6b3rgkje9l21mmardb48fiocbon.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kirmada150905.bitscarpool"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
