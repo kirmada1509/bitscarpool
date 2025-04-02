@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import React, { useEffect, useState } from "react";
 import {
     GoogleSignin,
@@ -11,11 +11,23 @@ import {
 export default function Index() {
 
     useEffect(() => {
-        GoogleSignin.configure({
-            webClientId:
-                "754183958941-tjj80vho6q6misdv4mpmmu99mg4a8ji2.apps.googleusercontent.com",
-            scopes: ["profile", "email"],
-        });
+        const checkPlayServices = async () => {
+            await GoogleSignin.configure({
+                webClientId:
+                    "754183958941-tjj80vho6q6misdv4mpmmu99mg4a8ji2.apps.googleusercontent.com",
+                scopes: ["profile", "email"],
+            });
+            
+            if (Platform.OS === 'android') {
+                try {
+                    await GoogleSignin.hasPlayServices();
+                } catch (error) {
+                    console.error('Play services not available:', error);
+                }
+            }
+        };
+
+        checkPlayServices();
     }, []);
 
     const [state, setState] = useState<any>();
