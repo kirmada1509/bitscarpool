@@ -1,14 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // NOTE: Update this to include the paths to all of your component files.
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        sans: ["Poppins", "sans-serif"], // Default font (Poppins)
+        poppins: ["Poppins", "sans-serif"], 
+        roboto: ["Roboto", "sans-serif"],  // Added Roboto
       },
     },
   },
   plugins: [],
-}
+};
