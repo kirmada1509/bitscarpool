@@ -1,102 +1,41 @@
-import { View, Text, Platform } from "react-native";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect, useState } from "react";
+import { View, Text } from "react-native";
 import {
-    GoogleSignin,
+    useFonts,
+    Poppins_400Regular,
+    Poppins_700Bold,
+} from "@expo-google-fonts/poppins";
+import * as SplashScreen from "expo-splash-screen";
+import React, { useEffect } from "react";
+import {
     GoogleSigninButton,
-    isErrorWithCode,
-    isSuccessResponse,
-    statusCodes,
 } from "@react-native-google-signin/google-signin";
 
-export default function Index() {
+import google_sign_in from "@/services/auth/googe_sign_in";
 
+export default function Index() {
     const [fontsLoaded] = useFonts({
-        Poppins: require("@expo-google-fonts/poppins/Poppins-Regular.ttf"),
-      });
-    
-      useEffect(() => {
-        if (fontsLoaded) {
-          SplashScreen.hideAsync();
-        }
-      }, [fontsLoaded]);
-    
-      if (!fontsLoaded) return null;
-    
+        Poppins: Poppins_400Regular,
+        PoppinsBold: Poppins_700Bold,
+    });
 
     useEffect(() => {
-        const checkPlayServices = async () => {
-            await GoogleSignin.configure({
-                webClientId:
-                    "754183958941-tjj80vho6q6misdv4mpmmu99mg4a8ji2.apps.googleusercontent.com",
-                scopes: ["profile", "email"],
-            });
-            
-            if (Platform.OS === 'android') {
-                try {
-                    await GoogleSignin.hasPlayServices();
-                } catch (error) {
-                    console.error('Play services not available:', error);
-                }
-            }
-        };
-
-        checkPlayServices();
-    }, []);
-
-    const [state, setState] = useState<any>();
-    const [isInProgress, setIsInProgress] = useState(false);
-
-    const signIn = async () => {
-        try {
-            console.log("Checking Google Play Services...");
-            await GoogleSignin.hasPlayServices();
-
-            console.log("Starting Google Sign-In...");
-            const response = await GoogleSignin.signIn();
-            console.log("Sign-In Response:", response);
-
-            if (isSuccessResponse(response)) {
-                console.log("Sign-In Successful! User Info:", response.data);
-                setState({ userInfo: response.data });
-            } else {
-                console.log("Sign-In Cancelled by User");
-            }
-        } catch (error) {
-            console.error("Sign-In Error:", error);
-
-            if (isErrorWithCode(error)) {
-                switch (error.code) {
-                    case statusCodes.IN_PROGRESS:
-                        console.warn("Google Sign-In is already in progress.");
-                        break;
-                    case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-                        console.error("Google Play Services not available or outdated.");
-                        break;
-                    case statusCodes.SIGN_IN_CANCELLED:
-                        console.warn("User cancelled Google Sign-In.");
-                        break;
-                    case statusCodes.SIGN_IN_REQUIRED:
-                        console.warn("Sign-In required but not completed.");
-                        break;
-                    default:
-                        console.error("Unexpected Google Sign-In error:", error);
-                }
-            } else {
-                console.error("Non-Google Sign-In Error:", error);
-            }
+        if (fontsLoaded) {
+            SplashScreen.hideAsync();
         }
-    };
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) return null;
 
     return (
         <View>
             <Text>Index</Text>
+            {/* <Text className="font-poppinsr">Index</Text> */}
             <GoogleSigninButton
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Dark}
-                onPress={signIn}
-                disabled={isInProgress}
+                onPress={async () => {
+                    await google_sign_in();
+                }}
             />
         </View>
     );
