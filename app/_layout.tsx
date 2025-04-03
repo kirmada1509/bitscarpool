@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native'
 import React from 'react'
-import { Stack } from 'expo-router'
+import { Slot } from 'expo-router'
 import "../global.css"
+import { AuthProvider } from '@/services/auth/AuthContext'
 
 export default function _layout() {
   return (
-    <Stack>
-      <Stack.Screen name='index'></Stack.Screen>
-    </Stack>
+    <AuthProvider>
+      <Slot/>
+    </AuthProvider>
   )
 }
