@@ -1,4 +1,6 @@
 import { View, Text, Platform } from "react-native";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect, useState } from "react";
 import {
     GoogleSignin,
@@ -9,6 +11,19 @@ import {
 } from "@react-native-google-signin/google-signin";
 
 export default function Index() {
+
+    const [fontsLoaded] = useFonts({
+        Poppins: require("@expo-google-fonts/poppins/Poppins-Regular.ttf"),
+      });
+    
+      useEffect(() => {
+        if (fontsLoaded) {
+          SplashScreen.hideAsync();
+        }
+      }, [fontsLoaded]);
+    
+      if (!fontsLoaded) return null;
+    
 
     useEffect(() => {
         const checkPlayServices = async () => {
