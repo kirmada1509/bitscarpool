@@ -165,15 +165,15 @@ export function CompactTripCard({ trip }: { trip: Trip }) {
             style={{
                 width: screen.width * 0.9,
                 shadowColor: colors.primary,
-                shadowOffset: { width: 0, height: 0 },
-                shadowOpacity: 0.6,
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 1,
                 shadowRadius: 3,
                 elevation: 5,
             }}>
             {/* Route row */}
             <View className="flex-row justify-between items-center mb-2">
                 <Text className="text-primary font-semibold text-base">
-                    {trip.from.toUpperCase()}
+                    {trip.from.toUpperCase().substring(0, 3)}
                 </Text>
 
                 <View className="flex-row items-center mx-1.5 flex-1">
@@ -194,11 +194,11 @@ export function CompactTripCard({ trip }: { trip: Trip }) {
                 </View>
 
                 <Text className="text-primary font-semibold text-base">
-                    {trip.to.toUpperCase()}
+                    {trip.to.toUpperCase().substring(0, 3)}
                 </Text>
             </View>
 
-            {/* Date + Seats + Vehicle */}
+            {/* Date + Fuel */}
             <View className="flex-row justify-between items-center">
                 <View className="flex-row items-center gap-1">
                     <Icon name="access-time" size={14} color="#9CA3AF" />
@@ -207,26 +207,6 @@ export function CompactTripCard({ trip }: { trip: Trip }) {
                     </Text>
                 </View>
 
-                <View className="flex-row items-center gap-1">
-                    <Icon name="event-seat" size={14} color="#9CA3AF" />
-                    <Text className="text-white text-xs">
-                        <Text className="text-emerald-400">
-                            {trip.seats_available}
-                        </Text>
-                        /{trip.capacity}
-                    </Text>
-                </View>
-
-                <View className="flex-row items-center gap-1">
-                    <Icon name="directions-car" size={14} color="#9CA3AF" />
-                    <Text className="text-white text-xs">
-                        {trip.vehicle_model}
-                    </Text>
-                </View>
-            </View>
-
-            {/* Fuel + AC */}
-            <View className="flex-row justify-between mt-1.5">
                 <View className="flex-row items-center gap-1">
                     <Icon
                         name="local-gas-station"
@@ -237,6 +217,27 @@ export function CompactTripCard({ trip }: { trip: Trip }) {
                         className={`text-xs ${fuelTextColor(trip.fuel_type)}`}>
                         {trip.fuel_type.toUpperCase()}
                     </Text>
+                </View>
+            </View>
+
+            {/*Seats + Vehicle + AC */}
+            <View className="flex-row justify-between mt-1.5">
+                <View className="flex-row gap-3">
+                    <View className="flex-row items-center gap-1">
+                        <Icon name="event-seat" size={14} color="#9CA3AF" />
+                        <Text className="text-white text-xs">
+                            <Text className="text-emerald-400">
+                                {trip.seats_available}
+                            </Text>
+                            /{trip.capacity}
+                        </Text>
+                    </View>
+                    <View className="flex-row items-center gap-1">
+                        <Icon name="directions-car" size={14} color="#9CA3AF" />
+                        <Text className="text-white text-xs">
+                            {trip.vehicle_model}
+                        </Text>
+                    </View>
                 </View>
 
                 <View className="flex-row items-center gap-1">

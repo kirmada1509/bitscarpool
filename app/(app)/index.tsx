@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import React from "react";
 
 import useDimensionsContext from "@/utils/theme/dimension_context";
@@ -7,7 +7,7 @@ import { useAuth } from "@/services/auth/AuthContext";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { colors } from "@/utils/theme/colors";
-import {TripCard, CompactTripCard} from "@/components/trips/trip_card";
+import { TripCard, CompactTripCard } from "@/components/trips/trip_card";
 import { testTrips } from "@/z_data/trips_data";
 
 export default function Index() {
@@ -51,8 +51,17 @@ export default function Index() {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <TripCard trip={testTrips[0]}/>
-                <CompactTripCard trip={testTrips[0]}/>
+
+                <FlatList
+                    data={testTrips}
+                    renderItem={(item) => <CompactTripCard trip={item.item} />}
+                    keyExtractor={(item, index) => index.toString()}
+                    scrollEnabled={true}
+                    contentContainerStyle={{ paddingBottom: 100 }}
+                    ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+                    style={{flexGrow: 1}}
+                />
+
             </View>
         </SafeAreaView>
     );
