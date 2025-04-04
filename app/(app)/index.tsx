@@ -1,15 +1,14 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
-import { useAuth } from "@/services/auth/AuthContext";
 
-export default function SignIn() {
-    const {session, signOut } = useAuth();
+import useDimensionsContext from "@/utils/theme/dimension_context";
+
+export default function Index() {
+    const screen = useDimensionsContext();
+
     return (
-        <View>
-            <Text>Welcome {session?.user.givenName}</Text>
-            <Pressable onPress={signOut}>
-                <Text>Sign Out</Text>
-            </Pressable>
+        <View className="h-full flex-col justify-center items-center">
+            <Text style={{ color: "red" }}>Welcome to the App</Text>
         </View>
     );
 }
