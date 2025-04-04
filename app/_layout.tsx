@@ -1,12 +1,25 @@
-import React from 'react'
-import { Slot } from 'expo-router'
-import "../global.css"
-import { AuthProvider } from '@/services/auth/AuthContext'
+import React from "react";
+import { Slot } from "expo-router";
+import "../global.css";
+import { AuthProvider } from "@/services/auth/AuthContext";
+import { Platform, SafeAreaView, StatusBar } from "react-native";
+import { DimensionsProvider } from "@/utils/theme/dimension_context";
 
 export default function _layout() {
-  return (
-    <AuthProvider>
-      <Slot/>
-    </AuthProvider>
-  )
+    return (
+        <AuthProvider>
+            <DimensionsProvider>
+                <StatusBar
+                    translucent
+                    backgroundColor="transparent"
+                    barStyle="default"
+                />
+                <SafeAreaView
+                    className="bg-black"
+                    style={{ paddingTop: Platform.OS === "android" ? StatusBar.currentHeight ?? 0 : 0 }}>
+                    <Slot />
+                </SafeAreaView>
+            </DimensionsProvider>
+        </AuthProvider>
+    );
 }
