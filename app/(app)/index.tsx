@@ -1,19 +1,16 @@
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import React from "react";
-
-import useDimensionsContext from "@/utils/theme/dimension_context";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "@/services/auth/AuthContext";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { colors } from "@/utils/theme/colors";
-import { TripCard, CompactTripCard } from "@/components/trips/trip_card";
+import { CompactTripCard } from "@/components/trips/trip_card";
 import { testTrips } from "@/z_data/trips_data";
+import { router } from "expo-router";
 
 export default function Index() {
-    const screen = useDimensionsContext();
     const { session } = useAuth();
-    const profilePicture = session?.user.photo;
     return (
         <SafeAreaView className="bg-black h-full px-5 py-3">
             <View className="flex-row w-full justify-between items-center mb-5">
@@ -41,11 +38,11 @@ export default function Index() {
             </TouchableOpacity>
 
             <View className="mt-10">
-                <View className="flex-row justify-between">
+                <View className="flex-row justify-between mb-3">
                     <Text className="text-white text-xl font-bold">
                         Recently Posted Trips
                     </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push("/(app)/all_trips")}>
                         <Text className="text-black_3 text-lg font-semibold">
                             View All
                         </Text>
@@ -58,10 +55,11 @@ export default function Index() {
                     keyExtractor={(item, index) => index.toString()}
                     scrollEnabled={true}
                     contentContainerStyle={{ paddingBottom: 100 }}
-                    ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-                    style={{flexGrow: 1}}
+                    ItemSeparatorComponent={() => (
+                        <View style={{ height: 10 }} />
+                    )}
+                    style={{ flexGrow: 1 }}
                 />
-
             </View>
         </SafeAreaView>
     );

@@ -26,9 +26,9 @@ export function TripCard({ trip }: { trip: Trip }) {
             {/* Route */}
             <View className="flex-row justify-between items-center mb-3 px-5">
                 {/* From */}
-                <View className="bg-primary px-2 py-1.5 rounded-md">
-                    <Text className="text-black text-base font-bold">
-                        {trip.from.toUpperCase()}
+                <View className="bg-primary px-2 py-1.5 rounded-md min-w-[20%]">
+                    <Text className="text-black text-base font-bold text-center">
+                        {trip.from.toUpperCase().substring(0, 3)}
                     </Text>
                 </View>
 
@@ -49,15 +49,20 @@ export function TripCard({ trip }: { trip: Trip }) {
                     />
                 </View>
                 {/* To */}
-                <View className="bg-primary px-2 py-1.5 rounded-md">
-                    <Text className="text-black text-base font-bold">
-                        {trip.to.toUpperCase()}
+                <View className="bg-primary px-2 py-1.5 rounded-md min-w-[20%]">
+                    <Text className="text-black text-base font-bold text-center">
+                        {trip.to.toUpperCase().substring(0, 3)}
                     </Text>
                 </View>
             </View>
 
+            {/* <View className="flex-row justify-between px-5">
+                <Text className="text-white font-normal">{trip.from}</Text>
+                <Text className="text-white font-normal">{trip.to}</Text>
+            </View> */}
+
             {/* Date & Flex */}
-            <View className="flex-row justify-between mb-3">
+            <View className="flex-row justify-between my-3">
                 <View className="flex-row items-center gap-1.5">
                     <Icon name="access-time" size={15} color="#9CA3AF" />
                     <View>
@@ -171,10 +176,12 @@ export function CompactTripCard({ trip }: { trip: Trip }) {
                 elevation: 5,
             }}>
             {/* Route row */}
-            <View className="flex-row justify-between items-center mb-2">
-                <Text className="text-primary font-semibold text-base">
-                    {trip.from.toUpperCase().substring(0, 3)}
-                </Text>
+            <View className="flex-row justify-between items-center mb-2 px-5">
+                <View className="bg-primary px-2 py-1.5 rounded-md min-w-[20%]">
+                    <Text className="text-black text-base font-bold text-center">
+                        {trip.from.toUpperCase().substring(0, 3)}
+                    </Text>
+                </View>
 
                 <View className="flex-row items-center mx-1.5 flex-1">
                     <View
@@ -193,9 +200,11 @@ export function CompactTripCard({ trip }: { trip: Trip }) {
                     />
                 </View>
 
-                <Text className="text-primary font-semibold text-base">
-                    {trip.to.toUpperCase().substring(0, 3)}
-                </Text>
+                <View className="bg-primary px-2 py-1.5 rounded-md min-w-[20%]">
+                    <Text className="text-black text-base font-bold text-center">
+                        {trip.to.toUpperCase().substring(0,3)}
+                    </Text>
+                </View>
             </View>
 
             {/* Date + Fuel */}
