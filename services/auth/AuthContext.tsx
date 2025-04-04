@@ -9,6 +9,7 @@ import google_sign_in from "./googe_sign_in";
 import { GoogleSignin, User } from "@react-native-google-signin/google-signin";
 import { router } from "expo-router";
 import { SecureDelete, SecureGet, SecureSave } from "./useSecureStorage";
+import { log, warn, error } from "@/utils/logger"; // 👈 Import custom logger
 
 interface AuthContextType {
     signIn: () => void;
@@ -32,20 +33,25 @@ export function AuthProvider({ children }: PropsWithChildren) {
         const restoreSession = async () => {
             const storedSession = await SecureGet("session");
             if (storedSession) {
-                setSession(JSON.parse(storedSession));
+                const parsedSession: User = JSON.parse(storedSession);
+                log("Restored session from secure storage:", parsedSession.user.givenName);
+                setSession(parsedSession);
             }
         };
         restoreSession();
     }, []);
 
     async function signIn() {
+        log("Attempting Google Sign-In");
         const FireBaseResponse = await google_sign_in();
+
         if (FireBaseResponse instanceof Error) {
-            console.error(FireBaseResponse);
+            error("Google Sign-In Error:", FireBaseResponse);
         } else if (FireBaseResponse == null) {
-            console.warn("Empty Firebase Response");
+            warn("Empty Firebase Response received");
         } else {
-            console.log("session set to: ", FireBaseResponse.user.givenName);
+            const user = FireBaseResponse.user;
+            log("User signed in:", user.givenName);
             await SecureSave("session", JSON.stringify(FireBaseResponse));
             setSession(FireBaseResponse);
             router.replace("/(app)");
@@ -53,9 +59,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
     }
 
     async function signOut() {
+        log("Signing out user");
         await GoogleSignin.signOut();
         await SecureDelete("session");
         setSession(null);
+        log("Session cleared, redirecting to /sign_in");
         router.replace("/sign_in");
     }
 
