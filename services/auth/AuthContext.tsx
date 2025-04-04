@@ -34,8 +34,12 @@ export function AuthProvider({ children }: PropsWithChildren) {
             const storedSession = await SecureGet("session");
             if (storedSession) {
                 const parsedSession: User = JSON.parse(storedSession);
-                log("Restored session from secure storage:", parsedSession.user.givenName);
+                log(
+                    "Restored session from secure storage:",
+                    parsedSession.user.givenName
+                );
                 setSession(parsedSession);
+                router.replace("/(app)");
             }
         };
         restoreSession();

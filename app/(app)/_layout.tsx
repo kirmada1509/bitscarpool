@@ -8,5 +8,5 @@ export default function AppLayout() {
     if (!session) {
         return <Redirect href="/sign_in" />;
     }
-    return <Stack />;
+    return <Stack screenOptions={{headerShown: false}}/>;
 }
