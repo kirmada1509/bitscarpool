@@ -1,10 +1,4 @@
-import {
-    SafeAreaView,
-    View,
-    Image,
-    Text,
-    TouchableOpacity,
-} from "react-native";
+import { View, Image, Text, TouchableOpacity, Linking } from "react-native";
 import {
     useFonts,
     Poppins_400Regular,
@@ -12,11 +6,11 @@ import {
 } from "@expo-google-fonts/poppins";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect } from "react";
-import { GoogleSigninButton } from "@react-native-google-signin/google-signin";
 
 import { useAuth } from "@/services/auth/AuthContext";
 import useDimensionsContext from "@/utils/theme/dimension_context";
-import SignIn from "./(app)";
+import TermsAndConditions from "@/components/sign_in/terms_and_conditions";
+import GooglSignInButton from "@/components/sign_in/googleSingInButton";
 
 export default function Index() {
     const { signIn } = useAuth();
@@ -34,23 +28,8 @@ export default function Index() {
 
     if (!fontsLoaded) return null;
 
-    function GooglSignInButton() {
-        return (
-            <TouchableOpacity
-                className="flex-row justify-center items-center border-primary bg-black_1 border-[1px] rounded-2xl py-2"
-                style={{width: screen.width * 0.9}}
-                onPress={signIn}>
-                <Image
-                    source={require("@/assets/images/google-icon.png")}
-                    className="size-8 object-scale-down mx-3"
-                />
-                <Text className="text-white text-[16px] font-semibold">Sign In with Google</Text>
-            </TouchableOpacity>
-        );
-    }
-
     return (
-        <SafeAreaView className="h-full flex-col justify-center items-center">
+        <View className="h-full flex-col justify-center items-center">
             <Image
                 source={require("@/assets/images/logo.png")}
                 className="w-auto"
@@ -59,9 +38,10 @@ export default function Index() {
                     resizeMode: "contain",
                 }}
             />
-            <View>
+            <View className="my-10">
+                <GooglSignInButton signIn={signIn} />
+                <TermsAndConditions/>
             </View>
-                <GooglSignInButton />
-        </SafeAreaView>
+        </View>
     );
 }
