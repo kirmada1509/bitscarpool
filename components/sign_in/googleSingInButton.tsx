@@ -7,7 +7,7 @@ export default function GooglSignInButton({ signIn }: { signIn: () => void }) {
 
     return (
         <TouchableOpacity
-            className="flex-row justify-center items-center border-primary bg-black_1 border-[1px] rounded-2xl py-2"
+            className="flex-row justify-center items-center border-primary bg-black_1 border-[1px] rounded-2xl py-3"
             style={{ width: screen.width * 0.9 }}
             onPress={signIn}>
             <Image
