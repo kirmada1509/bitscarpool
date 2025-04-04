@@ -7,6 +7,7 @@ import {
 import google_sign_in from "./googe_sign_in";
 import { GoogleSignin, User } from "@react-native-google-signin/google-signin";
 import { router } from "expo-router";
+// import { SecureDelete, SecureGet, SecureSave } from "./useSecureStorage";
 
 interface AuthContextType {
     signIn: () => void;
@@ -25,6 +26,18 @@ export const useAuth = (): AuthContextType => {
 
 export function AuthProvider({ children }: PropsWithChildren) {
     const [session, setSession] = useState<User | null>(null);
+    // const [loading, setLoading] = useState(true); 
+
+    // useEffect(() => {
+    //     const restoreSession = async () => {
+    //         const storedSession = await SecureGet("session");
+    //         if (storedSession) {
+    //             setSession(JSON.parse(storedSession));
+    //         }
+    //         setLoading(false);
+    //     };
+    //     restoreSession();
+    // }, []);
 
     async function signIn() {
         const FireBaseResponse = await google_sign_in();
@@ -35,6 +48,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
             console.warn("Empty Firebase Response");
         }else{
             console.log("session set to: ", FireBaseResponse.user.givenName);
+            // await SecureSave("session", JSON.stringify(FireBaseResponse));
             setSession(FireBaseResponse);
             router.replace("/(app)")
         }
@@ -42,9 +56,12 @@ export function AuthProvider({ children }: PropsWithChildren) {
     
     async function signOut() {
         await GoogleSignin.signOut();
+        // await SecureDelete("session");
         setSession(null);
-        router.replace("/")
+        router.replace("/sign_in");
     }
+
+    // if (loading) return null; 
 
     return (
         <AuthContext.Provider value={{signIn, signOut, session }}>

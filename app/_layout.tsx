@@ -14,11 +14,7 @@ export default function _layout() {
                     backgroundColor="transparent"
                     barStyle="default"
                 />
-                <SafeAreaView
-                    className="bg-black"
-                    style={{ paddingTop: Platform.OS === "android" ? StatusBar.currentHeight ?? 0 : 0 }}>
-                    <Slot />
-                </SafeAreaView>
+                <Slot/>
             </DimensionsProvider>
         </AuthProvider>
     );
