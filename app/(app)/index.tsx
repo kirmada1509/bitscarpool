@@ -14,10 +14,11 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { colors } from "@/utils/theme/colors";
 import { CompactTripCard } from "@/components/trips/trip_card";
 import { testTrips } from "@/z_data/trips_data";
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
 
 export default function Index() {
     const { session } = useAuth();
+    return <Redirect href={"/(app)/(trips)/create_trip"}/>
     return (
         <SafeAreaView className="bg-black h-full px-5 py-3">
             <View className="flex-row w-full justify-between items-center mb-5">
@@ -32,8 +33,8 @@ export default function Index() {
                 <Text className="text-primary text-xl font-medium capitalize">
                     Hello! {session?.user.givenName?.split(" ")[0]}
                 </Text>
-                <Text className="text-white text-3xl capitalize">
-                    Where Are You Going?
+                <Text className="text-white text-3xl">
+                    Where are you going?
                 </Text>
             </View>
 
@@ -45,7 +46,7 @@ export default function Index() {
             </TouchableOpacity>
 
             {/* recently posted trips */}
-            <View className="mt-10">
+            <View className="mt-10 max-h-[50%]">
                 <View className="flex-row justify-between mb-3">
                     <Text className="text-white text-xl font-bold">
                         Recently Posted Trips
@@ -59,20 +60,41 @@ export default function Index() {
                 </View>
 
                 <FlatList
-                    data={testTrips}
+                    data={testTrips.slice(0, 5)}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={(item) => (
-                        <Pressable onPress={() => router.push(`/(app)/(trips)/detailed_view/${item.index}`)}>
+                        <Pressable
+                            onPress={() =>
+                                router.push(
+                                    `/(app)/(trips)/detailed_view/${item.index}`
+                                )
+                            }>
                             <CompactTripCard trip={item.item} />
                         </Pressable>
                     )}
                     scrollEnabled={true}
-                    contentContainerStyle={{ paddingBottom: 100 }}
+                    showsVerticalScrollIndicator={false}
                     ItemSeparatorComponent={() => (
                         <View style={{ height: 10 }} />
                     )}
-                    style={{ flexGrow: 1 }}
+                    style={{ flexGrow: 1, borderRadius: 10 }}
                 />
+            </View>
+
+            <View className="flex-col gap-3 mt-3">
+                <View className="px-5">
+                    <Text className="text-white text-2xl font-medium">
+                        Got Empty Seats?
+                    </Text>
+                    <Text className="text-white text-xl font-light">
+                        Share your ride and let others join in.
+                    </Text>
+                </View>
+                <TouchableOpacity className="w-full h-[40px] bg-primary flex-row justify-center items-center rounded-md" onPress={()=>{router.push("/(app)/(trips)/create_trip")}}>
+                    <Text className="text-black text-2xl font-semibold">
+                        Create a Trip
+                    </Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );

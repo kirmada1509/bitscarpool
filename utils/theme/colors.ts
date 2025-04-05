@@ -4,6 +4,6 @@ export const colors = {
     black_1: "#313133",
     black_2: "#3D3C3F",
     black_3: "#8C8A93",
-    whtie: "#FFFFFF"
+    white: "#FFFFFF"
 
 }
