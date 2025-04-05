@@ -1,4 +1,11 @@
-import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
+import {
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    FlatList,
+    Pressable,
+} from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "@/services/auth/AuthContext";
@@ -37,12 +44,14 @@ export default function Index() {
                 </Text>
             </TouchableOpacity>
 
+            {/* recently posted trips */}
             <View className="mt-10">
                 <View className="flex-row justify-between mb-3">
                     <Text className="text-white text-xl font-bold">
                         Recently Posted Trips
                     </Text>
-                    <TouchableOpacity onPress={() => router.push("/(app)/all_trips")}>
+                    <TouchableOpacity
+                        onPress={() => router.push("/(app)/(trips)/all_trips")}>
                         <Text className="text-black_3 text-lg font-semibold">
                             View All
                         </Text>
@@ -51,8 +60,12 @@ export default function Index() {
 
                 <FlatList
                     data={testTrips}
-                    renderItem={(item) => <CompactTripCard trip={item.item} />}
                     keyExtractor={(item, index) => index.toString()}
+                    renderItem={(item) => (
+                        <Pressable onPress={() => router.push(`/(app)/(trips)/${item.index}`)}>
+                            <CompactTripCard trip={item.item} />
+                        </Pressable>
+                    )}
                     scrollEnabled={true}
                     contentContainerStyle={{ paddingBottom: 100 }}
                     ItemSeparatorComponent={() => (
