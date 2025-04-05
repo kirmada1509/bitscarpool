@@ -1,16 +1,19 @@
-import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
-import React, { useEffect } from "react";
+import {
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    FlatList,
+    Pressable,
+} from "react-native";
+import React from "react";
 
-import useDimensionsContext from "@/utils/theme/dimension_context";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useAuth } from "@/services/auth/AuthContext";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { colors } from "@/utils/theme/colors";
-import { TripCard, CompactTripCard } from "@/components/trips/trip_card";
+import { TripCard } from "@/components/trips/trip_card";
 import { testTrips } from "@/z_data/trips_data";
-import { router, useNavigation } from "expo-router";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { router } from "expo-router";
 
 export default function AllTrips() {
     return (
@@ -32,7 +35,16 @@ export default function AllTrips() {
             <View className="mt-10">
                 <FlatList
                     data={testTrips}
-                    renderItem={(item) => <TripCard trip={item.item} />}
+                    renderItem={(item) => (
+                        <Pressable
+                            onPress={() =>
+                                router.push(
+                                    `/(app)/(trips)/detailed_view/${item.index}`
+                                )
+                            }>
+                            <TripCard trip={item.item} />
+                        </Pressable>
+                    )}
                     keyExtractor={(item, index) => index.toString()}
                     scrollEnabled={true}
                     contentContainerStyle={{ paddingBottom: 100 }}

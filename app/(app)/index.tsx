@@ -62,7 +62,7 @@ export default function Index() {
                     data={testTrips}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={(item) => (
-                        <Pressable onPress={() => router.push(`/(app)/(trips)/${item.index}`)}>
+                        <Pressable onPress={() => router.push(`/(app)/(trips)/detailed_view/${item.index}`)}>
                             <CompactTripCard trip={item.item} />
                         </Pressable>
                     )}
