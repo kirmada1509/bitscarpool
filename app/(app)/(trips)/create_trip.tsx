@@ -1,4 +1,6 @@
+import DropdownComponent from "@/components/trips/location_drop_down";
 import { colors } from "@/utils/theme/colors";
+import { testLocations } from "@/z_data/locations";
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -6,6 +8,7 @@ import StepIndicator from "react-native-step-indicator";
 
 export default function Create_Trip() {
     const [currentPosition, setCurrentPosition] = useState(0);
+    const [fromLocation, setFromLocation] = useState<string | null>(null);
     const stepCount = 3;
 
     return (
@@ -19,9 +22,8 @@ export default function Create_Trip() {
             />
 
             <View style={{ marginTop: 40 }}>
-                <Text style={{ fontSize: 18, textAlign: "center", color: colors.primary}}>
-                    Current Step: {labels[currentPosition]}
-                </Text>
+
+                <DropdownComponent label="From" placeHolder="Select a Location" selected={fromLocation} setSelected={setFromLocation} DropDownData={testLocations}/>
             </View>
 
             <View className="flex-row justify-between gap-2">
