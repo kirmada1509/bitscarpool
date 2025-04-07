@@ -3,13 +3,21 @@ import DropdownComponent from "@/components/trips/location_drop_down";
 import { useAuth } from "@/services/auth/AuthContext";
 import { colors } from "@/utils/theme/colors";
 import { testLocations } from "@/z_data/locations";
-import React, { useRef, useState } from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import React, { useRef, useState, useEffect } from "react";
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    TextInput,
+    Alert,
+    BackHandler,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StepIndicator from "react-native-step-indicator";
 import DateAndTimePicker from "@/components/trips/date_time_picker";
 import FlexibilitySelector from "@/components/trips/flexibility_selector";
 import PagerView from "react-native-pager-view";
+import { router } from "expo-router";
 
 export default function Create_Trip() {
     const [currentPosition, setCurrentPosition] = useState(0);
@@ -33,6 +41,38 @@ export default function Create_Trip() {
     const [fuelType, setFuelType] = useState("");
 
     const pagerViewRef = useRef<PagerView>(null);
+
+    useEffect(() => {
+        const backAction = () => {
+            if (currentPosition === 0) {
+                Alert.alert("Hold on!", "Are you sure you want to go back?", [
+                    {
+                        text: "Cancel",
+                        onPress: () => null,
+                        style: "destructive",
+                    },
+                    {
+                        text: "YES",
+                        onPress: () => router.back(),
+                    },
+                ]);
+            } else {
+                setCurrentPosition((prev) => {
+                    const newPos = prev - 1;
+                    pagerViewRef.current?.setPageWithoutAnimation(newPos);
+                    return newPos;
+                });
+            }
+            return true; // prevent default behavior
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+
+        return () => backHandler.remove();
+    }, [currentPosition]);
 
     const stepCount = 3;
 
@@ -119,7 +159,9 @@ export default function Create_Trip() {
                     className="bg-black_2 px-5 py-2 rounded-lg w-[40%]"
                     onPress={() => {
                         setCurrentPosition(currentPosition - 1);
-                        pagerViewRef.current?.setPageWithoutAnimation(currentPosition - 1);
+                        pagerViewRef.current?.setPageWithoutAnimation(
+                            currentPosition - 1
+                        );
                     }}
                     disabled={currentPosition === 0}
                     style={{
@@ -134,7 +176,9 @@ export default function Create_Trip() {
                     className="bg-primary px-5 py-2 rounded-lg w-[40%] shadow-black_3 shadow-xl"
                     onPress={async () => {
                         setCurrentPosition(currentPosition + 1);
-                        pagerViewRef.current?.setPageWithoutAnimation(currentPosition + 1);
+                        pagerViewRef.current?.setPageWithoutAnimation(
+                            currentPosition + 1
+                        );
                     }}
                     disabled={currentPosition === stepCount - 1}
                     style={{
