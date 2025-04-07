@@ -35,7 +35,7 @@ export default function DropDown({
     const screen = useDimensionsContext();
 
     return (
-        <View className="" style={{ zIndex: zIndex }}>
+        <View className="flex-1" style={{ zIndex: zIndex }}>
             <Label label={label}></Label>
             <TouchableOpacity
                 className="bg-black_1 py-1 text-center text-xl text-primary placeholder-text-black_3 rounded-lg"

@@ -4,14 +4,17 @@ import { useAuth } from "@/services/auth/AuthContext";
 import { colors } from "@/utils/theme/colors";
 import { testLocations } from "@/z_data/locations";
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StepIndicator from "react-native-step-indicator";
+import DateAndTimePicker from "@/components/trips/date_time_picker";
+import FlexibilitySelector from "@/components/trips/flexibility_selector";
 
 export default function Create_Trip() {
     const [currentPosition, setCurrentPosition] = useState(0);
     const [fromLocation, setFromLocation] = useState<string | null>(null);
     const [toLocation, setToLocation] = useState<string | null>(null);
+    const [time, setTime] = useState("");
     const { session } = useAuth();
     const [name, setName] = useState<string>(
         session?.user.name
@@ -20,6 +23,7 @@ export default function Create_Trip() {
             .toString()
             .replace(",", " ") || ""
     );
+    const [buffer, setBuffer] = useState<number>(1);
     const stepCount = 3;
 
     return (
@@ -39,6 +43,9 @@ export default function Create_Trip() {
                 setFromLocation={setFromLocation}
                 toLocation={toLocation}
                 setToLocation={setToLocation}
+                time={time}
+                setTime={setTime}
+                setBuffer={setBuffer}
             />
 
             <View className="flex-row justify-between gap-2">
@@ -76,6 +83,9 @@ function Step1({
     setFromLocation,
     toLocation,
     setToLocation,
+    time,
+    setTime,
+    setBuffer,
 }: {
     name: string;
     setName: (val: string) => void;
@@ -83,11 +93,13 @@ function Step1({
     setFromLocation: (val: string) => void;
     toLocation: string | null;
     setToLocation: (val: string) => void;
+    time: string;
+    setTime: (val: string) => void;
+    setBuffer: (val: number) => void;
 }) {
     //creator, from, to, departure time, flexibility window.
-
     return (
-        <View className="flex-col">
+        <View className="flex-col gap-3">
             <Label label={"Name"} />
             <TextInput
                 className="w-full py-2 px-2 text-left text-xl font-normal tracking-wider bg-black_1 text-white"
@@ -96,7 +108,7 @@ function Step1({
                 value={name}
                 onChangeText={setName}
             />
-            <View className="flex-col gap-1 ">
+            <View className="flex-row gap-2">
                 <DropdownComponent
                     zIndex={2}
                     label="From"
@@ -114,8 +126,11 @@ function Step1({
                     DropDownData={testLocations}
                 />
             </View>
-
-            
+            <DateAndTimePicker set={setTime} />
+            <View className="flex-col items-end">
+                <Label label="Waiting Buffer (Hrs)" />
+                <FlexibilitySelector set={setBuffer} />
+            </View>
         </View>
     );
 }
