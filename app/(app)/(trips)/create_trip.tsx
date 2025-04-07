@@ -4,14 +4,7 @@ import { useAuth } from "@/services/auth/AuthContext";
 import { colors } from "@/utils/theme/colors";
 import { testLocations } from "@/z_data/locations";
 import React, { useRef, useState } from "react";
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    TextInput,
-    Button,
-    Pressable,
-} from "react-native";
+import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StepIndicator from "react-native-step-indicator";
 import DateAndTimePicker from "@/components/trips/date_time_picker";
@@ -58,7 +51,7 @@ export default function Create_Trip() {
                 style={{ flex: 1 }}
                 onPageScroll={(e) => setCurrentPosition(e.nativeEvent.position)}
                 ref={pagerViewRef}>
-                <View key="1">
+                <View key="1" className="flex-col justify-center">
                     <Step1
                         name={name}
                         setName={setName}
@@ -85,7 +78,7 @@ export default function Create_Trip() {
                     />
                 </View>
 
-                <View key="2">
+                <View key="2" className="flex-col justify-center">
                     <Step2
                         fare={fare}
                         setFare={setFare}
@@ -100,7 +93,7 @@ export default function Create_Trip() {
                     />
                 </View>
 
-                <View key="3">
+                <View key="3" className="flex-col justify-center">
                     <Step3
                         name={name}
                         fromLocation={fromLocation}
@@ -121,76 +114,12 @@ export default function Create_Trip() {
                 </View>
             </PagerView>
 
-            {/* {currentPosition === 0 && (
-                <Step1
-                    name={name}
-                    setName={setName}
-                    fromLocation={fromLocation}
-                    setFromLocation={setFromLocation}
-                    toLocation={toLocation}
-                    setToLocation={setToLocation}
-                    time={time}
-                    setTime={(date) => {
-                        const formattedDate = new Date(date).toLocaleString(
-                            "en-US",
-                            {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                                hour: "numeric",
-                                minute: "numeric",
-                                hour12: true,
-                            }
-                        );
-                        setTime(formattedDate);
-                    }}
-                    setBuffer={setBuffer}
-                />
-            )}
-
-            {currentPosition === 1 && (
-                <Step2
-                    fare={fare}
-                    setFare={setFare}
-                    vehicleModel={vehicleModel}
-                    setVehicleModel={setVehicleModel}
-                    capacity={capacity}
-                    setCapacity={setCapacity}
-                    seatsAvailable={seatsAvailable}
-                    setSeatsAvailable={setSeatsAvailable}
-                    fuelType={fuelType}
-                    setFuelType={setFuelType}
-                />
-            )}
-
-            {currentPosition === 2 && (
-                <Step3
-                    name={name}
-                    fromLocation={fromLocation}
-                    toLocation={toLocation}
-                    time={time}
-                    buffer={buffer}
-                    fare={fare}
-                    model={vehicleModel}
-                    fuel={fuelType}
-                    capacity={Number(capacity)}
-                    seats={Number(seatsAvailable)}
-                    onConfirm={() => {
-                        // Replace this with your final trip submission logic
-                        console.log("Trip confirmed!");
-                        // e.g., submitTrip({ name, fromLocation, ... });
-                    }}
-                />
-            )} */}
-
             <View className="flex-row justify-between gap-2">
                 <TouchableOpacity
                     className="bg-black_2 px-5 py-2 rounded-lg w-[40%]"
                     onPress={() => {
                         setCurrentPosition(currentPosition - 1);
-                        pagerViewRef.current?.setPage(
-                            currentPosition - 1
-                        );
+                        pagerViewRef.current?.setPageWithoutAnimation(currentPosition - 1);
                     }}
                     disabled={currentPosition === 0}
                     style={{
@@ -203,17 +132,14 @@ export default function Create_Trip() {
 
                 <TouchableOpacity
                     className="bg-primary px-5 py-2 rounded-lg w-[40%] shadow-black_3 shadow-xl"
-                    onPress={() => {
+                    onPress={async () => {
                         setCurrentPosition(currentPosition + 1);
-                        pagerViewRef.current?.setPage(
-                            currentPosition + 1
-                        );
+                        pagerViewRef.current?.setPageWithoutAnimation(currentPosition + 1);
                     }}
                     disabled={currentPosition === stepCount - 1}
                     style={{
-                        opacity: currentPosition === stepCount - 1 ? 0.5: 1,
-                    }}
-                    >
+                        opacity: currentPosition === stepCount - 1 ? 0.5 : 1,
+                    }}>
                     <Text className="text-black text-lg text-center font-bold">
                         Next
                     </Text>
