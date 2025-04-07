@@ -18,7 +18,7 @@ import { Redirect, router } from "expo-router";
 
 export default function Index() {
     const { session } = useAuth();
-    return <Redirect href={"/(app)/(trips)/create_trip"}/>
+    // return <Redirect href={"/(app)/(trips)/create_trip"}/>
     return (
         <SafeAreaView className="bg-black h-full px-5 py-3">
             <View className="flex-row w-full justify-between items-center mb-5">
