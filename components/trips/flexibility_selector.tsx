@@ -16,9 +16,9 @@ export default function FlexibilitySelector({
                 min={0}
                 step={1}
                 value={count}
-                onChange={(c: number)=>{
+                onChange={(c: number) => {
                     setCount(c);
-                    set(c)
+                    set(c);
                 }}
                 editable={false}
                 background={colors.black}
