@@ -1,10 +1,10 @@
 export interface Trip {
     id?: string; 
     creator: string;
-    from: string; //
-    to: string; //
-    departure_time: string; //
-    flexibility_window: number; //
+    from: string; 
+    to: string; 
+    departure_time: string; 
+    flexibility_window: number; 
     total_fare: number;
     vehicle_model: string;
     capacity: number;

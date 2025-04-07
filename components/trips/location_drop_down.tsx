@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { colors } from "@/utils/theme/colors";
 import useDimensionsContext from "@/utils/theme/dimension_context";
 import { AntDesign } from "@expo/vector-icons";
+import Label from "../text/label";
 
 interface DropDownProps {
     zIndex: number;
@@ -35,7 +36,7 @@ export default function DropDown({
 
     return (
         <View className="" style={{ zIndex: zIndex }}>
-            <Text className="text-primary text-[12px] ml-3 mb-2">{label}</Text>
+            <Label label={label}></Label>
             <TouchableOpacity
                 className="bg-black_1 py-1 text-center text-xl text-primary placeholder-text-black_3 rounded-lg"
                 onLayout={async (e) =>
@@ -60,7 +61,7 @@ export default function DropDown({
                             color={colors.primary}
                         />
                         <TextInput
-                            className="flex-1 py-2 text-center text-xl text-primary placeholder-text-black_3"
+                            className="flex-1 py-2 text-center text-xl text-primary"
                             placeholder="Search For Location"
                             placeholderTextColor={colors.black_3}
                             onChangeText={(search) => {

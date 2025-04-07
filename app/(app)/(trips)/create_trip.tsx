@@ -1,8 +1,10 @@
+import Label from "@/components/text/label";
 import DropdownComponent from "@/components/trips/location_drop_down";
+import { useAuth } from "@/services/auth/AuthContext";
 import { colors } from "@/utils/theme/colors";
 import { testLocations } from "@/z_data/locations";
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StepIndicator from "react-native-step-indicator";
 
@@ -10,6 +12,14 @@ export default function Create_Trip() {
     const [currentPosition, setCurrentPosition] = useState(0);
     const [fromLocation, setFromLocation] = useState<string | null>(null);
     const [toLocation, setToLocation] = useState<string | null>(null);
+    const { session } = useAuth();
+    const [name, setName] = useState<string>(
+        session?.user.name
+            ?.split(" ")
+            .slice(0, 2)
+            .toString()
+            .replace(",", " ") || ""
+    );
     const stepCount = 3;
 
     return (
@@ -22,24 +32,14 @@ export default function Create_Trip() {
                 onPress={(step) => setCurrentPosition(step)}
             />
 
-            <View className="flex-col gap-1 ">
-                <DropdownComponent
-                    zIndex={2}
-                    label="From"
-                    placeHolder="Select"
-                    selected={fromLocation}
-                    setSelected={setFromLocation}
-                    DropDownData={testLocations}
-                />
-                <DropdownComponent
-                    zIndex={1}
-                    label="To"
-                    placeHolder="Select"
-                    selected={toLocation}
-                    setSelected={setToLocation}
-                    DropDownData={testLocations}
-                />
-            </View>
+            <Step1
+                name={name}
+                setName={setName}
+                fromLocation={fromLocation}
+                setFromLocation={setFromLocation}
+                toLocation={toLocation}
+                setToLocation={setToLocation}
+            />
 
             <View className="flex-row justify-between gap-2">
                 {currentPosition > 0 ? (
@@ -69,8 +69,58 @@ export default function Create_Trip() {
     );
 }
 
-const labels = ["Login", "Shipping", "Payment"];
+function Step1({
+    name,
+    setName,
+    fromLocation,
+    setFromLocation,
+    toLocation,
+    setToLocation,
+}: {
+    name: string;
+    setName: (val: string) => void;
+    fromLocation: string | null;
+    setFromLocation: (val: string) => void;
+    toLocation: string | null;
+    setToLocation: (val: string) => void;
+}) {
+    //creator, from, to, departure time, flexibility window.
 
+    return (
+        <View className="flex-col">
+            <Label label={"Name"} />
+            <TextInput
+                className="w-full py-2 px-2 text-left text-xl font-normal tracking-wider bg-black_1 text-white"
+                placeholder="Your Name"
+                placeholderTextColor={colors.black_3}
+                value={name}
+                onChangeText={setName}
+            />
+            <View className="flex-col gap-1 ">
+                <DropdownComponent
+                    zIndex={2}
+                    label="From"
+                    placeHolder="Select"
+                    selected={fromLocation}
+                    setSelected={setFromLocation}
+                    DropDownData={testLocations}
+                />
+                <DropdownComponent
+                    zIndex={1}
+                    label="To"
+                    placeHolder="Select"
+                    selected={toLocation}
+                    setSelected={setToLocation}
+                    DropDownData={testLocations}
+                />
+            </View>
+
+            
+        </View>
+    );
+}
+
+const labels = ["Location", "Fare", "Confirm"];
 const customStyles = {
     stepIndicatorSize: 25,
     currentStepIndicatorSize: 30,
