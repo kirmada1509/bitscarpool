@@ -9,6 +9,7 @@ import StepIndicator from "react-native-step-indicator";
 export default function Create_Trip() {
     const [currentPosition, setCurrentPosition] = useState(0);
     const [fromLocation, setFromLocation] = useState<string | null>(null);
+    const [toLocation, setToLocation] = useState<string | null>(null);
     const stepCount = 3;
 
     return (
@@ -21,9 +22,23 @@ export default function Create_Trip() {
                 onPress={(step) => setCurrentPosition(step)}
             />
 
-            <View style={{ marginTop: 40 }}>
-
-                <DropdownComponent label="From" placeHolder="Select a Location" selected={fromLocation} setSelected={setFromLocation} DropDownData={testLocations}/>
+            <View className="flex-col gap-1 ">
+                <DropdownComponent
+                    zIndex={2}
+                    label="From"
+                    placeHolder="Select"
+                    selected={fromLocation}
+                    setSelected={setFromLocation}
+                    DropDownData={testLocations}
+                />
+                <DropdownComponent
+                    zIndex={1}
+                    label="To"
+                    placeHolder="Select"
+                    selected={toLocation}
+                    setSelected={setToLocation}
+                    DropDownData={testLocations}
+                />
             </View>
 
             <View className="flex-row justify-between gap-2">

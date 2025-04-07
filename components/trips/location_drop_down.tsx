@@ -12,6 +12,7 @@ import useDimensionsContext from "@/utils/theme/dimension_context";
 import { AntDesign } from "@expo/vector-icons";
 
 interface DropDownProps {
+    zIndex: number;
     label: string;
     placeHolder: string;
     selected: string | null;
@@ -20,6 +21,7 @@ interface DropDownProps {
 }
 
 export default function DropDown({
+    zIndex,
     label,
     placeHolder,
     selected,
@@ -32,8 +34,8 @@ export default function DropDown({
     const screen = useDimensionsContext();
 
     return (
-        <View>
-            <Text className="text-primary text-[12px] ml-3 mb-2">From</Text>
+        <View className="" style={{ zIndex: zIndex }}>
+            <Text className="text-primary text-[12px] ml-3 mb-2">{label}</Text>
             <TouchableOpacity
                 className="bg-black_1 py-1 text-center text-xl text-primary placeholder-text-black_3 rounded-lg"
                 onLayout={async (e) =>
@@ -46,14 +48,18 @@ export default function DropDown({
             </TouchableOpacity>
             {showItems && (
                 <View
-                    className="absolute bg-black_2 gap-1 w-full rounded-lg"
+                    className="absolute bg-black_2 gap-1 w-full rounded-xl"
                     style={{
                         marginTop: height ? 2 * height : 0,
                         height: screen.height * 0.25,
                     }}>
                     <View className="flex-row items-center bg-black_1 rounded-lg px-3">
-                    <AntDesign name="search1" size={20} color={colors.primary} />
-                    <TextInput
+                        <AntDesign
+                            name="search1"
+                            size={20}
+                            color={colors.primary}
+                        />
+                        <TextInput
                             className="flex-1 py-2 text-center text-xl text-primary placeholder-text-black_3"
                             placeholder="Search For Location"
                             placeholderTextColor={colors.black_3}
@@ -73,10 +79,11 @@ export default function DropDown({
                     <FlatList
                         scrollEnabled
                         keyboardShouldPersistTaps="always"
+                        className=""
                         data={data}
                         renderItem={(item) => (
                             <TouchableOpacity
-                                className="py-1 my-1 rounded-xl border-black border-b"
+                                className="py-1 my-1 rounded-xl border-black_1 border-b overflow-visible"
                                 onPress={() => {
                                     Keyboard.dismiss();
                                     setSelected(item.item.value);
