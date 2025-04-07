@@ -4,6 +4,7 @@ import useDimensionsContext from "@/utils/theme/dimension_context";
 import { Trip } from "@/utils/models/trip";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { colors } from "@/utils/theme/colors";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export function TripCard({ trip }: { trip: Trip }) {
     const screen = useDimensionsContext();
@@ -14,17 +15,10 @@ export function TripCard({ trip }: { trip: Trip }) {
 
     return (
         <View
-            className="bg-black_2 rounded-2xl px-4 py-4 border border-gray-800"
-            style={{
-                width: screen.width * 0.9,
-                shadowColor: colors.primary,
-                shadowOffset: { width: 0, height: 0 },
-                shadowOpacity: 1,
-                shadowRadius: 4,
-                elevation: 7,
-            }}>
+            className="relative bg-black_1 rounded-2xl px-4 py-4 border border-gray-800"
+            style={{ width: screen.width * 0.9 }}>
             {/* Route */}
-            <View className="flex-row justify-between items-center mb-3 px-5">
+            <View className="relative flex-row justify-between items-center px-5">
                 {/* From */}
                 <View className="bg-primary px-2 py-1.5 rounded-md min-w-[20%]">
                     <Text className="text-black text-base font-bold text-center">
@@ -56,17 +50,14 @@ export function TripCard({ trip }: { trip: Trip }) {
                 </View>
             </View>
 
-            {/* <View className="flex-row justify-between px-5">
-                <Text className="text-white font-normal">{trip.from}</Text>
-                <Text className="text-white font-normal">{trip.to}</Text>
-            </View> */}
-
             {/* Date & Flex */}
             <View className="flex-row justify-between my-3">
                 <View className="flex-row items-center gap-1.5">
                     <Icon name="access-time" size={15} color="#9CA3AF" />
-                    <View>
-                        <Text className="text-black_3 text-xs">DEPARTURE</Text>
+                    <View className="flex-col justify-start items-start">
+                        <Text className="text-black_3 text-xs">
+                            Date & Time:{" "}
+                        </Text>
                         <Text className="text-white text-sm">
                             {parseDateTime(trip.departure_time)}
                         </Text>
@@ -76,7 +67,7 @@ export function TripCard({ trip }: { trip: Trip }) {
                 <View className="flex-row items-center gap-1.5">
                     <Icon name="update" size={15} color="#9CA3AF" />
                     <View>
-                        <View className="flex-row">
+                        <View className="flex-col">
                             <Text className="text-black_3 text-xs">
                                 Buffer:{" "}
                             </Text>
@@ -84,14 +75,11 @@ export function TripCard({ trip }: { trip: Trip }) {
                                 {trip.flexibility_window}hrs
                             </Text>
                         </View>
-                        <Text className="text-white text-sm">
-                            {flexibilityWindow.start} - {flexibilityWindow.end}
-                        </Text>
                     </View>
                 </View>
             </View>
 
-            <View className="border-t border-dashed border-primary mb-2.5" />
+            {/* <View className="border-t border-dashed border-primary mb-2.5" /> */}
 
             {/* Stats */}
             <View className="flex-row justify-between mb-2">
@@ -148,15 +136,26 @@ export function TripCard({ trip }: { trip: Trip }) {
                 </View>
             </View>
 
-            {/* Notes */}
-            {trip.notes?.trim() && (
-                <View className="bg-gray-900 px-2.5 py-2 rounded-md">
-                    <Text className="text-gray-500 text-xs mb-0.5">NOTES</Text>
-                    <Text className="text-gray-200 text-sm italic">
-                        "{trip.notes.trim()}"
-                    </Text>
+            <View className="border-t border-dashed border-primary mb-2.5" />
+
+            {/* <View className="relative  -mx-7">
+                <View className="absolute left-0 right-0 top-1/2 -translate-y-1/2 border-t border-dashed border-primary" />
+                <View className="flex-row justify-between">
+                    <View className="size-6 bg-black rounded-full" />
+                    <View className="size-6 bg-black rounded-full" />
                 </View>
-            )}
+            </View> */}
+
+            {/* Fare */}
+            <View className="flex-row justify-end items-center">
+                <MaterialIcons
+                    name="currency-rupee"
+                    size={20}
+                    color={colors.primary}
+                />
+                <Text className="text-primary text-xl font-bold border-primary border-b">{trip.total_fare}</Text>
+            </View>
+
         </View>
     );
 }
@@ -202,7 +201,7 @@ export function CompactTripCard({ trip }: { trip: Trip }) {
 
                 <View className="bg-primary px-2 py-1.5 rounded-md min-w-[20%]">
                     <Text className="text-black text-base font-bold text-center">
-                        {trip.to.toUpperCase().substring(0,3)}
+                        {trip.to.toUpperCase().substring(0, 3)}
                     </Text>
                 </View>
             </View>

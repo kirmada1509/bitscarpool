@@ -17,6 +17,7 @@ import { testTrips } from "@/z_data/trips_data";
 import { Redirect, router } from "expo-router";
 
 export default function Index() {
+    return <Redirect href={"/(app)/(trips)/search_trip"}/>
     const { session } = useAuth();
     // return <Redirect href={"/(app)/(trips)/create_trip"}/>
     return (
@@ -38,7 +39,9 @@ export default function Index() {
                 </Text>
             </View>
 
-            <TouchableOpacity className="bg-black_2 w-full h-12 rounded-lg flex-row justify-between items-center px-3">
+            <TouchableOpacity
+                className="bg-black_2 w-full h-12 rounded-lg flex-row justify-between items-center px-3"
+                onPress={() => router.push("/(app)/(trips)/search_trip")}>
                 <AntDesign name="search1" size={20} color={colors.primary} />
                 <Text className="flex-1 text-center text-black_3 text-xl font-medium">
                     Search For a Cab
@@ -90,7 +93,11 @@ export default function Index() {
                         Share your ride and let others join in.
                     </Text>
                 </View>
-                <TouchableOpacity className="w-full h-[40px] bg-primary flex-row justify-center items-center rounded-md" onPress={()=>{router.push("/(app)/(trips)/create_trip")}}>
+                <TouchableOpacity
+                    className="w-full h-[40px] bg-primary flex-row justify-center items-center rounded-md"
+                    onPress={() => {
+                        router.push("/(app)/(trips)/create_trip");
+                    }}>
                     <Text className="text-black text-2xl font-semibold">
                         Create a Trip
                     </Text>
